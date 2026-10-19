@@ -29,3 +29,5 @@ __pycache__/
 .env
 core/*.xlsx
 core/*.xls
+!/LICENSE
+!/README.md
