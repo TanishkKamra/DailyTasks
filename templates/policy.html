@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}Policy Reader | Daily Tasks{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <span class="eyebrow">Document Readers</span>
+    <h1 class="page-title">GI Policy Reader</h1>
+    <p class="page-subtitle">Parallel cloud-powered extraction of structured policy data directly into company-formatted Excel sheets.</p>
+  </div>
+</div>
+
+<!-- Configuration & Settings Card -->
+<div class="card" id="config-card">
+  <div class="card-header-clean">
+    <h2 class="card-title">1. Provider & Insurer Settings</h2>
+  </div>
+  
+  <!-- Section 1: Provider & API Key -->
+  <div class="form-section no-border">
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label class="form-label" for="provider-select">Inference Provider</label>
+        <select class="form-select" id="provider-select">
+          {% for name, p in providers.items() %}
+            <option value="{{ name }}" {% if name == 'AzureAI' %}selected{% endif %}>{{ name }}</option>
+          {% endfor %}
+        </select>
+        <div class="form-text" id="provider-help-text">Azure AI Foundry endpoint (gpt-5-mini) pre-configured.</div>
+      </div>
+
+      <div class="form-group" id="api-key-group">
+        <label class="form-label" for="api-key">API Key</label>
+        <input class="form-control" type="password" id="api-key" placeholder="Leave blank to use the server key">
+        <div class="form-text">Leave blank to use the key configured on the server (.env).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Dynamic Provider Fields: Azure -->
+  <div id="azure-config" class="form-section" style="display: none;">
+    <div class="form-grid-3">
+      <div class="form-group">
+        <label class="form-label" for="azure-endpoint">Azure Endpoint</label>
+        <input class="form-control" type="text" id="azure-endpoint" value="">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="azure-deployment">Deployment Name</label>
+        <input class="form-control" type="text" id="azure-deployment" value="gpt-5-mini">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="azure-version">API Version</label>
+        <input class="form-control" type="text" id="azure-version" value="2025-04-01-preview">
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2b: Dynamic Provider Fields: Custom -->
+  <div id="custom-config" class="form-section" style="display: none;">
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label class="form-label" for="custom-base-url">API Base URL</label>
+        <input class="form-control" type="text" id="custom-base-url" placeholder="e.g. http://localhost:11434/v1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="custom-model-name">Model Name</label>
+        <input class="form-control" type="text" id="custom-model-name" placeholder="e.g. llama3">
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Insurer Mode & Max Pages -->
+  <div class="form-section">
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label class="form-label" for="company-mode-select">Select Insurer (Company Mode)</label>
+        <select class="form-select" id="company-mode-select">
+          {% for m in company_modes %}
+            <option value="{{ m }}" {% if m == 'ZUNO' %}selected{% endif %}>{{ m }}</option>
+          {% endfor %}
+        </select>
+        <div class="form-text info-note" id="company-mode-note">
+          ZUNO Mode: Normalizes full vehicle number and customer name; extracts policy type.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="max-pages">Pages to Analyse per Policy</label>
+        <input class="form-control" type="number" id="max-pages" value="0" min="0" max="50">
+        <div class="form-text info-note">
+          Set to 0 to read all available pages in each document.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Feature Toggles -->
+  <div class="form-section">
+    <div class="toggle-cards-grid">
+      <label class="toggle-option-card">
+        <input type="checkbox" id="auto-detect-toggle" checked>
+        <div class="toggle-card-content">
+          <div class="toggle-card-header">
+            <strong>Auto-Detect Insurer</strong>
+          </div>
+          <span class="toggle-desc">Inspects document header to auto-apply insurer heuristics per PDF.</span>
+        </div>
+      </label>
+
+      <label class="toggle-option-card">
+        <input type="checkbox" id="fresh-workbook-toggle">
+        <div class="toggle-card-content">
+          <div class="toggle-card-header">
+            <strong>Clean Single Workbook</strong>
+          </div>
+          <span class="toggle-desc">Creates a dedicated fresh workbook (e.g. <code>TATAPolicies.xlsx</code>).</span>
+        </div>
+      </label>
+
+      <label class="toggle-option-card">
+        <input type="checkbox" id="show-raw-toggle">
+        <div class="toggle-card-content">
+          <div class="toggle-card-header">
+            <strong>Show Extracted Text</strong>
+          </div>
+          <span class="toggle-desc">Displays the raw PDF text layer inside result expander cards.</span>
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- Upload & Action Card -->
+<div class="card" id="upload-card">
+  <div class="card-header-clean">
+    <h2 class="card-title">2. Upload Policy Documents (PDF)</h2>
+  </div>
+  
+  <div class="dropzone" id="policy-dropzone">
+    <div class="dropzone-icon-box">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="12" y1="18" x2="12" y2="12"></line>
+        <line x1="9" y1="15" x2="12" y2="12"></line>
+        <line x1="15" y1="15" x2="12" y2="12"></line>
+      </svg>
+    </div>
+    <div class="dropzone-text">Click to choose or drag & drop insurance policy PDF files here</div>
+    <div class="dropzone-hint">Supports single or multi-file PDF batch analysis</div>
+    <input type="file" id="policy-files" accept=".pdf,application/pdf" multiple style="display: none;">
+  </div>
+  <div id="policy-file-list" class="file-list-badge-container"></div>
+
+  <div class="action-btn-row" style="margin-top: 26px;">
+    <button class="btn btn-primary btn-large btn-block" type="button" id="start-analysis-btn">
+      <span>Analyse Policy Documents</span>
+    </button>
+    <button class="btn btn-danger btn-large" type="button" id="stop-analysis-btn" style="display: none; min-width: 180px;">
+      <span>Stop Analysis</span>
+    </button>
+  </div>
+
+  <div class="progress-wrapper" id="policy-progress">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="policy-progress-fill"></div>
+    </div>
+    <div class="progress-status">
+      <span id="policy-progress-status">Preparing document parsing...</span>
+      <span id="policy-progress-pct">0%</span>
+    </div>
+  </div>
+
+  <div class="log-box" id="policy-log-box" style="display: none;"></div>
+</div>
+
+<!-- Results & Downloads Section -->
+<div id="results-section" style="display: none;">
+  <!-- Export Action Bar -->
+  <div class="card">
+    <div class="results-action-bar">
+      <div>
+        <h2 class="card-title" style="margin-bottom: 4px;">Extraction Master Summary</h2>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">All extracted policy records mapped directly to template schema.</span>
+      </div>
+      <div class="download-btn-group">
+        <a class="btn btn-primary" id="download-excel-btn" href="/policy/api/download_excel">
+          <span>Download Excel (.xlsx)</span>
+        </a>
+        <button class="btn btn-secondary" id="download-json-btn" type="button">
+          <span>Download JSON</span>
+        </button>
+        <button class="btn btn-secondary" id="download-csv-btn" type="button">
+          <span>Download CSV</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Master Summary Table -->
+    <div class="table-container" style="margin-top: 22px;">
+      <table class="data-table" id="policy-summary-table">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Status</th>
+            <th>Policy Number</th>
+            <th>Customer Name</th>
+            <th>Vehicle No</th>
+            <th>Insurer</th>
+            <th>Gross Premium</th>
+            <th style="text-align: center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="summary-table-body">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Individual Policy Cards -->
+  <div id="policy-results-container">
+    <!-- Populated dynamically with result cards -->
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>window.POLICY_PROVIDERS = {{ providers|tojson }};</script>
+<script src="{{ url_for('static', filename='js/policy.js') }}"></script>
+{% endblock %}

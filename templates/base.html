@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Daily Tasks{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3.1">
+  <script>
+    // Immediate theme initialization to prevent flash
+    (function() {
+      const savedTheme = localStorage.getItem('ocr_hub_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+    // Hide reveal targets before first paint; main.js animates them in.
+    // If main.js never takes over, show everything after 2.5s.
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('reveal-on');
+      setTimeout(function () {
+        if (!window.__revealReady) document.documentElement.classList.remove('reveal-on');
+      }, 2500);
+    }
+  </script>
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <!-- Floating Island Navigation -->
+  <nav class="topnav" aria-label="Main Navigation">
+    <div class="topnav-container">
+      <a class="topnav-brand" href="/">
+        Daily Tasks
+      </a>
+
+      <button class="nav-burger" id="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-items">
+        <span></span><span></span>
+      </button>
+
+      <div class="nav-items" id="nav-items">
+
+      <!-- Document Readers Group -->
+      <div class="nav-group">
+        <button class="navbtn {% if active_page in ['pan', 'aadhar', 'policy'] %}active{% endif %}" type="button" aria-expanded="false" aria-haspopup="true">
+          Document Readers <span class="nav-caret">▾</span>
+        </button>
+        <div class="dropdown-menu">
+          <a href="/pan" class="{% if active_page == 'pan' %}active{% endif %}">PAN Card OCR</a>
+          <a href="/aadhar" class="{% if active_page == 'aadhar' %}active{% endif %}">Aadhaar Card OCR</a>
+          <a href="/policy" class="{% if active_page == 'policy' %}active{% endif %}">GI Policy Reader</a>
+        </div>
+      </div>
+
+      <!-- LP Tools Group -->
+      <div class="nav-group">
+        <button class="navbtn {% if active_page in ['lp_delete', 'lp_datewise'] %}active{% endif %}" type="button" aria-expanded="false" aria-haspopup="true">
+          LP Tools <span class="nav-caret">▾</span>
+        </button>
+        <div class="dropdown-menu">
+          <a href="/lp-delete" class="{% if active_page == 'lp_delete' %}active{% endif %}">LP_Delete</a>
+          <a href="/lp-datewise" class="{% if active_page == 'lp_datewise' %}active{% endif %}">LP_DateWiseData</a>
+        </div>
+      </div>
+
+      <!-- Dashboard Link -->
+      <a href="/dashboard" class="navlink {% if active_page == 'dashboard' %}active{% endif %}">Dashboard</a>
+
+      <!-- File Share Link -->
+      <a href="/filesharing" class="navlink {% if active_page == 'filesharing' %}active{% endif %}">File Share</a>
+
+      <!-- Right Tooling: Batches Drawer, Theme Toggle, LAN Host -->
+      <div class="nav-right-tools">
+        <button class="drawer-toggle-btn" id="open-drawer-btn" type="button" title="View Recent Job Batches" aria-label="View Recent Job Batches">
+          <span>Batches</span>
+        </button>
+
+        <button class="theme-toggle-btn" id="theme-toggle-btn" type="button" title="Toggle Dark / Light Mode" aria-label="Toggle Dark or Light Theme">
+          <span id="theme-toggle-text">Dark</span>
+        </button>
+
+        <div class="nav-host-badge" title="LAN Host IP and Port">
+          {{ lan_ip }}:{{ port }}
+        </div>
+      </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content View -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Recent Batches Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay" tabindex="-1"></div>
+  <div class="drawer-container" id="recent-drawer" role="dialog" aria-modal="true" aria-label="Recent Job Batches">
+    <div class="drawer-header">
+      <h3>Recent Job Batches</h3>
+      <button class="modal-close-btn" id="close-drawer-btn" type="button" aria-label="Close drawer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="drawer-jobs-list">
+      <div style="text-align: center; color: var(--text-muted); padding: 30px 10px;">Loading recent jobs...</div>
+    </div>
+  </div>
+
+  <!-- Side-by-Side Split View Modal (Policy / PDF) -->
+  <div class="modal-overlay" id="split-modal" role="dialog" aria-modal="true" aria-labelledby="split-modal-title">
+    <div class="modal-container modal-large">
+      <div class="modal-header">
+        <h3 class="modal-title" id="split-modal-title">Side-by-Side Document Inspection</h3>
+        <button class="modal-close-btn" id="close-split-modal-btn" type="button" aria-label="Close dialog">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 16px;">
+        <div class="split-view-container">
+          <div class="split-view-pane" style="flex: 1.2;">
+            <iframe class="split-view-pdf" id="split-pdf-frame" src="" title="PDF Document Viewer"></iframe>
+          </div>
+          <div class="split-view-pane" style="flex: 1; overflow-y: auto; padding-right: 4px;" id="split-fields-container">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera Capture Modal -->
+  <div class="modal-overlay" id="camera-modal" role="dialog" aria-modal="true" aria-label="Direct Card Capture">
+    <div class="modal-container" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Direct Card Capture</h3>
+        <button class="modal-close-btn" id="close-camera-modal-btn" type="button" aria-label="Close dialog">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div style="position: relative; background: #000; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 16px; aspect-ratio: 4/3;">
+          <video id="camera-video" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+          <canvas id="camera-canvas" style="display: none;"></canvas>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 12px; align-items: center;">
+          <button class="btn btn-primary" id="shutter-btn" type="button">
+            <span>Capture Photo</span>
+          </button>
+          <button class="btn btn-secondary" id="switch-camera-btn" type="button">
+            <span>Switch Camera</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

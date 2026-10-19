@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Daily Tasks{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <span class="eyebrow">Overview</span>
+    <h1 class="page-title">Daily Tasks Dashboard</h1>
+    <p class="page-subtitle">Unified document processing suite, port reference, and live multi-service request monitoring.</p>
+  </div>
+  <div style="display: flex; gap: 10px; align-items: center;">
+    <button class="btn btn-secondary" id="refresh-logs-btn" type="button">Refresh Feed</button>
+  </div>
+</div>
+
+<!-- Hub Launch Grid -->
+<div class="hub-grid">
+  <a class="hub-card" href="/pan">
+    <h3 class="hub-card-title">PAN Card OCR</h3>
+    <p class="hub-card-desc">Upload PAN card images or capture via camera to extract PAN number, name, and DOB with validation.</p>
+    <span class="hub-card-link">Open tool</span>
+  </a>
+
+  <a class="hub-card" href="/aadhar">
+    <h3 class="hub-card-title">Aadhaar OCR</h3>
+    <p class="hub-card-desc">Upload Aadhaar card photos or PDFs to extract 12-digit number and name with strict VID exclusion.</p>
+    <span class="hub-card-link">Open tool</span>
+  </a>
+
+  <a class="hub-card" href="/policy">
+    <h3 class="hub-card-title">GI Policy Reader</h3>
+    <p class="hub-card-desc">Parallel multi-threaded extraction with auto insurer detection, side-by-side PDF preview, and clean Excel export.</p>
+    <span class="hub-card-link">Open tool</span>
+  </a>
+
+  <a class="hub-card" href="/lp-delete">
+    <h3 class="hub-card-title">LP_Delete</h3>
+    <p class="hub-card-desc">Scan workbooks for reference keywords with ultra-fast XML zip surgery and verification.</p>
+    <span class="hub-card-link">Open tool</span>
+  </a>
+
+  <a class="hub-card" href="/lp-datewise">
+    <h3 class="hub-card-title">LP_DateWiseData</h3>
+    <p class="hub-card-desc">Stratified random sampling across 15-minute windows throughout the month with shortfall balancing.</p>
+    <span class="hub-card-link">Open tool</span>
+  </a>
+</div>
+
+<!-- System Status Panel -->
+<div class="card">
+  <h2 class="card-title">System & Server Information</h2>
+  <div class="field-grid">
+    <div class="field-item">
+      <div class="field-label">Server Binding</div>
+      <div class="field-value">0.0.0.0:{{ port }}</div>
+    </div>
+    <div class="field-item">
+      <div class="field-label">Local LAN Address</div>
+      <div class="field-value">http://{{ lan_ip }}:{{ port }}</div>
+    </div>
+    <div class="field-item">
+      <div class="field-label">PAN OCR Engine</div>
+      <div class="field-value">{{ pan_engine }}</div>
+    </div>
+    <div class="field-item">
+      <div class="field-label">Aadhaar OCR Engine</div>
+      <div class="field-value">{{ aadhar_engine }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- Server & Port Reference Collapsible -->
+<div class="card">
+  <details class="expander">
+    <summary><strong>Server & Port Reference</strong></summary>
+    <div style="margin-top: 18px; overflow-x: auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tool / Service</th>
+            <th>Web Interface (Port {{ port }})</th>
+            <th>JSON API Endpoint</th>
+            <th>Methods</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>PAN Card OCR</strong></td>
+            <td><code>/pan</code>, <code>/panocr/</code></td>
+            <td><code>/pan/api/ocr</code>, <code>/panocr/api/ocr</code></td>
+            <td><code>GET, POST, OPTIONS</code></td>
+          </tr>
+          <tr>
+            <td><strong>Aadhaar Card OCR</strong></td>
+            <td><code>/aadhar</code>, <code>/aadharocr/</code></td>
+            <td><code>/aadhar/api/ocr</code>, <code>/aadharocr/api/ocr</code></td>
+            <td><code>GET, POST, OPTIONS</code></td>
+          </tr>
+          <tr>
+            <td><strong>GI Policy Reader</strong></td>
+            <td><code>/policy</code>, <code>/gi_policy</code></td>
+            <td><code>/policy/api/ocr</code>, <code>/policy/api/process</code></td>
+            <td><code>GET, POST, OPTIONS</code></td>
+          </tr>
+          <tr>
+            <td><strong>LP_Delete</strong></td>
+            <td><code>/lp-delete</code>, <code>/LP_Delete</code>, <code>/excelkeyword</code></td>
+            <td><code>/lp_delete/api/process</code></td>
+            <td><code>GET, POST</code></td>
+          </tr>
+          <tr>
+            <td><strong>LP_DateWiseData</strong></td>
+            <td><code>/lp-datewise</code>, <code>/LP_DateWiseData</code>, <code>/lp_datewisedata</code></td>
+            <td><code>/lp_datewise/api/process</code></td>
+            <td><code>GET, POST</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</div>
+
+<!-- Live Request Logs Feed -->
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+    <h2 class="card-title" style="margin-bottom: 0;">
+      Live Multi-Service Request Feed
+    </h2>
+    <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <label for="service-filter-select" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Filter:</label>
+        <select class="form-select" id="service-filter-select" style="height: 42px; font-size: 0.85rem; width: auto;">
+          <option value="All">All Services</option>
+          <option value="PAN OCR">PAN OCR</option>
+          <option value="Aadhaar OCR">Aadhaar OCR</option>
+          <option value="Policy Reader">Policy Reader</option>
+          <option value="LP_Delete">LP_Delete</option>
+          <option value="LP_DateWiseData">LP_DateWiseData</option>
+        </select>
+      </div>
+      <label class="checkbox-label">
+        <input type="checkbox" id="auto-refresh-toggle" checked> Auto-refresh (3s)
+      </label>
+    </div>
+  </div>
+
+  <div id="logs-container" style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading recent requests...</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
