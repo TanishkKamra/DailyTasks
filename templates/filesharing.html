@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}File Share | Daily Tasks{% endblock %}
+
+{% block head_extra %}
+<style>
+  .fileshare-container { padding: 0; }
+  .fileshare-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px; flex-wrap: wrap; gap: 24px; }
+  .fileshare-header h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.75rem); font-weight: 400; line-height: 0.98; letter-spacing: -0.025em; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 14px; }
+  .fileshare-header h1 svg { width: 0.62em; height: 0.62em; color: var(--primary); stroke-width: 1.3; }
+  .fileshare-toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .fileshare-toolbar .btn { height: 44px; padding: 0 20px; font-size: 0.86rem; }
+
+  .breadcrumb-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 28px; font-size: 0.84rem; color: var(--text-muted); flex-wrap: wrap; }
+  .breadcrumb-bar a { color: var(--text-main); text-decoration: none; cursor: pointer; padding: 6px 12px; border-radius: var(--radius-full); background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--hairline); transition: background-color var(--dur-fast) var(--ease); }
+  .breadcrumb-bar a:hover { background: var(--bg-hover); }
+  .breadcrumb-bar .sep { color: var(--text-muted); opacity: 0.5; }
+
+  .section-title { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin: 40px 0 16px 0; display: flex; align-items: center; gap: 10px; }
+  .section-title svg { width: 14px; height: 14px; }
+  .fileshare-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; }
+  .file-card { background: var(--bg-card); border: none; border-radius: 22px; padding: 20px; cursor: pointer; position: relative; box-shadow: 0 0 0 1px var(--hairline), 0 0 0 6px var(--shell), var(--shadow-sm), var(--inner-hi); transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+  .file-card:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--primary-border), 0 0 0 6px var(--shell), var(--shadow-md), var(--inner-hi); }
+  .file-card:active { transform: scale(0.99); }
+  .file-card.unavailable { opacity: 0.55; filter: grayscale(0.8); cursor: not-allowed; transform: none; }
+  .file-card .card-icon { width: 46px; height: 46px; border-radius: 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; color: var(--primary); background: var(--primary-light); box-shadow: inset 0 0 0 1px var(--primary-border); }
+  .file-card .card-icon svg { width: 22px; height: 22px; stroke-width: 1.4; }
+  .file-card .card-name { font-size: 0.9rem; font-weight: 500; color: var(--text-main); word-break: break-word; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-card .card-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; }
+  .file-card .card-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 4px; opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity var(--dur-fast) var(--ease), transform var(--dur) var(--ease); }
+  .file-card:hover .card-actions, .file-card:focus-within .card-actions { opacity: 1; pointer-events: auto; transform: none; }
+  .card-actions button { background: var(--bg-card); border: none; box-shadow: inset 0 0 0 1px var(--hairline-strong); border-radius: var(--radius-full); padding: 4px 9px; font-size: 0.7rem; cursor: pointer; color: var(--text-muted); display: inline-flex; align-items: center; gap: 3px; transition: color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+  .card-actions button:hover { color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+  .card-actions button.danger:hover { color: var(--danger-text); box-shadow: inset 0 0 0 1px var(--danger-text); }
+
+  .badge-live, .badge-unavailable { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.12em; border-radius: var(--radius-full); text-transform: uppercase; }
+  .badge-live { background: var(--success-bg); color: var(--success-text); box-shadow: inset 0 0 0 1px var(--success-border); }
+  .badge-unavailable { background: var(--danger-bg); color: var(--danger-text); box-shadow: inset 0 0 0 1px var(--danger-border); }
+
+  .empty-state { text-align: center; padding: 72px 16px; color: var(--text-muted); border-radius: 26px; box-shadow: inset 0 0 0 1px var(--hairline); background: var(--bg-card-inner); }
+  .empty-state .icon { margin-bottom: 14px; opacity: 0.6; display: flex; justify-content: center; color: var(--primary); }
+
+  .upload-zone { border: 1.5px dashed var(--hairline-strong); border-radius: 22px; padding: 28px; text-align: center; color: var(--text-muted); margin-bottom: 20px; cursor: pointer; background: var(--bg-card-inner); transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--primary); background: var(--primary-light); }
+  .upload-zone input[type="file"] { display: none; }
+
+  .fs-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(18, 15, 12, 0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
+  .fs-modal-overlay.active { display: flex; animation: fadeIn var(--dur) var(--ease-out); }
+  .fs-modal { background: var(--bg-card); border-radius: 28px; padding: 30px; width: min(100%, 480px); box-shadow: var(--bezel), var(--shadow-lg), var(--inner-hi); border: none; animation: modalScaleIn var(--dur-slow) var(--ease-out); }
+  .fs-modal h3 { margin: 0 0 20px 0; font-family: var(--font-display); font-size: 1.7rem; font-weight: 400; letter-spacing: -0.015em; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+  .fs-modal input { width: 100%; height: 50px; padding: 0 18px; border: 1px solid var(--hairline); border-radius: var(--radius-md); font-size: 0.94rem; font-family: inherit; background: var(--bg-card-inner); color: var(--text-main); box-sizing: border-box; margin-bottom: 18px; outline: none; transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+  .fs-modal input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-ring); }
+  .fs-modal .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="fileshare-container">
+  <div class="fileshare-header">
+    <div>
+    <span class="eyebrow">Local Network</span>
+    <h1>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      <span>File Share</span>
+    </h1>
+    </div>
+    <div class="fileshare-toolbar">
+      <button class="btn btn-secondary" onclick="showHostFolderModal()" id="btn-host-folder">Host a Folder</button>
+      <button class="btn btn-secondary" onclick="showNewFolderModal()" id="btn-new-folder">New Folder</button>
+      <button class="btn btn-primary" onclick="document.getElementById('file-input').click()" id="btn-upload">Upload Files</button>
+    </div>
+  </div>
+
+  <div class="upload-zone" id="upload-zone" tabindex="0" role="button" aria-label="Upload files drop area">
+    <div>Drop files here or click <strong>Upload Files</strong></div>
+    <input type="file" id="file-input" multiple aria-label="Choose files to upload">
+  </div>
+
+  <div class="breadcrumb-bar" id="breadcrumbs" aria-label="File location breadcrumb">
+    <a onclick="navigateTo(null)">Root</a>
+  </div>
+
+  <div id="hosted-section" style="display:none; margin-bottom: 24px;">
+    <div class="section-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+      <span>Hosted Folders (Live Host Disk)</span>
+    </div>
+    <div class="fileshare-grid" id="hosted-grid"></div>
+  </div>
+
+  <div id="uploads-section">
+    <div class="section-title" id="uploads-section-title" style="display:none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+      <span>Shared Uploads</span>
+    </div>
+    <div class="fileshare-grid" id="file-grid"></div>
+  </div>
+
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+    </div>
+    <div id="empty-state-text">This folder is empty</div>
+  </div>
+</div>
+
+<!-- Host Folder Modal -->
+<div class="fs-modal-overlay" id="host-folder-modal" role="dialog" aria-modal="true" aria-labelledby="host-modal-title">
+  <div class="fs-modal">
+    <h3 id="host-modal-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+      <span>Host a Local Folder</span>
+    </h3>
+    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:-8px; margin-bottom:12px;">
+      Register an existing directory on this machine. It is served read-only, live, with zero file copying.
+    </p>
+    <div id="host-folder-error" class="alert alert-danger" style="display:none; margin-bottom:12px; font-size:0.82rem; padding:8px 10px;"></div>
+    <input type="text" id="host-folder-path" placeholder="Absolute path, e.g. D:\Shared\Documents" autofocus aria-label="Absolute folder path">
+    <input type="text" id="host-folder-name" placeholder="Display name (optional, defaults to folder name)" aria-label="Optional folder display name">
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal('host-folder-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitHostFolder()">Host Folder</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Folder Modal -->
+<div class="fs-modal-overlay" id="new-folder-modal" role="dialog" aria-modal="true" aria-labelledby="new-folder-modal-title">
+  <div class="fs-modal">
+    <h3 id="new-folder-modal-title">Create New Folder</h3>
+    <input type="text" id="new-folder-name" placeholder="Folder name" autofocus aria-label="Folder name">
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal('new-folder-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="createFolder()">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rename Modal -->
+<div class="fs-modal-overlay" id="rename-modal" role="dialog" aria-modal="true" aria-labelledby="rename-modal-title">
+  <div class="fs-modal">
+    <h3 id="rename-modal-title">Rename</h3>
+    <input type="text" id="rename-input" placeholder="New name" aria-label="New item name">
+    <input type="hidden" id="rename-item-id">
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal('rename-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="renameItem()">Rename</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/filesharing.js') }}"></script>
+{% endblock %}

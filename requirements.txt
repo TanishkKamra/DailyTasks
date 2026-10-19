@@ -1,0 +1,30 @@
+# ══════════════════════════════════════════════════════════════════════
+# OCR Hub - Unified Architecture Requirements
+# ══════════════════════════════════════════════════════════════════════
+
+# Core Computer Vision & Image Processing
+opencv-python-headless>=4.8.0
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# OCR Engines
+rapidocr-onnxruntime>=1.2.0
+onnxruntime>=1.16.0
+pytesseract>=0.3.10
+
+# PDF Rasterization & Text Extraction
+pymupdf>=1.23.0
+
+# Unified Web Framework
+Flask>=3.0.0
+Werkzeug>=3.0.0
+
+# Data Processing & Excel Engines
+pandas>=2.0.0
+openpyxl>=3.1.0
+
+# HTTP Client (AI Inference APIs)
+requests>=2.31.0
+
+# Production WSGI Server
+waitress

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}LP_DateWiseData | Daily Tasks{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <span class="eyebrow">LP Tools</span>
+    <h1 class="page-title">LP_DateWiseData</h1>
+    <p class="page-subtitle">Stratified random sampling across 15-minute windows throughout the month with shortfall balancing.</p>
+  </div>
+</div>
+
+<!-- Upload Card -->
+<div class="card" id="upload-card">
+  <div class="card-header-clean">
+    <h2 class="card-title">1. Upload Excel File</h2>
+  </div>
+  <div class="dropzone" id="dw-dropzone">
+    <div class="dropzone-icon-box">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+    </div>
+    <div class="dropzone-text">Click to choose or drag & drop an Excel workbook (.xlsx)</div>
+    <div class="dropzone-hint">Supports standard Excel .xlsx workbooks</div>
+    <input type="file" id="dw-file" accept=".xlsx" style="display: none;">
+  </div>
+  <div id="dw-file-info" class="file-list-badge-container"></div>
+</div>
+
+<!-- Configuration & Sampling Section -->
+<div id="mapping-section" style="display: none;">
+  <div class="card">
+    <div class="card-header-clean">
+      <h2 class="card-title">2. Sheet & Sampling Parameters</h2>
+    </div>
+    
+    <div id="sheet-select-group" style="display:none;">
+      <div class="form-group">
+        <label class="form-label" for="dw-sheet-select">Select Sheet:</label>
+        <select class="form-select" id="dw-sheet-select"></select>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 14px;">
+      <label class="form-label" for="datetime-col-select">Datetime Column:</label>
+      <select class="form-select" id="datetime-col-select"></select>
+    </div>
+
+    <div class="form-group" style="margin-top: 14px;">
+      <label class="form-label" for="result-col-input">Result Column Name:</label>
+      <input class="form-control" type="text" id="result-col-input" value="Selected">
+    </div>
+
+    <div class="form-grid-2" style="margin-top: 22px;">
+      <div class="form-group">
+        <label class="form-label" for="target-total-input">Monthly Target Records (Count):</label>
+        <input class="form-control" type="number" id="target-total-input" value="1000" min="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="seed-input">Random Seed (for reproducibility):</label>
+        <input class="form-control" type="number" id="seed-input" value="42">
+      </div>
+    </div>
+
+    <div class="action-btn-row" style="margin-top: 28px;">
+      <button class="btn btn-primary btn-large btn-block" type="button" id="start-sampling-btn">
+        <span>Generate Sample Data</span>
+      </button>
+      <button class="btn btn-danger btn-large" type="button" id="stop-sampling-btn" style="display: none; min-width: 180px;">
+        <span>Stop Processing</span>
+      </button>
+    </div>
+
+    <div class="progress-wrapper" id="sampling-progress">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="sampling-progress-fill"></div>
+      </div>
+      <div class="progress-status">
+        <span id="sampling-progress-status">Preparing sampling...</span>
+        <span id="sampling-progress-pct">0%</span>
+      </div>
+    </div>
+
+    <div class="log-box" id="sampling-log-box" style="display: none;"></div>
+  </div>
+</div>
+
+<!-- Results & Download Section -->
+<div id="results-section" style="display: none;">
+  <div class="card">
+    <div class="card-header-clean">
+      <h2 class="card-title">3. Sampling Inspection & Download</h2>
+    </div>
+    
+    <div class="alert alert-success" id="sampling-summary-msg"></div>
+
+    <details class="expander" id="dist-expander" open>
+      <summary>Daily Sampling Distribution</summary>
+      <div class="table-container" id="day-summary-table-container"></div>
+    </details>
+
+    <details class="expander" id="preview-expander" style="margin-top: 20px;">
+      <summary>Preview Sampled Records (First 50 Rows)</summary>
+      <div class="table-container" id="sampled-preview-table-container"></div>
+    </details>
+
+    <div style="margin-top: 26px;">
+      <a class="btn btn-primary btn-large btn-block" id="download-sampled-btn" href="#" download="sampled_workbook.xlsx">
+        <span>Download Sampled Excel File</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lp_datewise.js') }}"></script>
+{% endblock %}

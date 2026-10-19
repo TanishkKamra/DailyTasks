@@ -1,0 +1,31 @@
+# Allowlist: only the files needed to run the app are tracked.
+# Everything else (data, logs, uploads, docs, tests, secrets) stays local.
+/*
+!/.gitignore
+!/.env.example
+!/requirements.txt
+!/app.py
+!/config.py
+!/server_gui.py
+!/server_gui.pyw
+!/install.bat
+!/install.sh
+!/start.bat
+!/start.sh
+!/run_all.bat
+!/run_all.sh
+!/gui.bat
+!/Control_Panel.bat
+!/DemoColumns.xlsx
+!/core/
+!/routes/
+!/static/
+!/templates/
+
+# Never track inside the allowed folders either
+__pycache__/
+*.py[cod]
+*.log
+.env
+core/*.xlsx
+core/*.xls

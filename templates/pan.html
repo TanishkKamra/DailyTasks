@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}PAN Card OCR | Daily Tasks{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <span class="eyebrow">Document Readers</span>
+    <h1 class="page-title">PAN Card OCR</h1>
+    <p class="page-subtitle">Instant field extraction for Indian PAN cards with auto-orientation correction, webcam capture, and validation.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header-clean">
+    <h2 class="card-title">1. Upload or Snap PAN Card Image</h2>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <span class="badge badge-ok">Engine: {{ engine }}</span>
+      <button class="btn btn-secondary" id="pan-camera-btn" type="button">
+        <span>Take Photo with Camera</span>
+      </button>
+    </div>
+  </div>
+
+  <form id="pan-form" method="POST" action="/pan" enctype="multipart/form-data">
+    <div class="dropzone" id="pan-dropzone">
+      <div class="dropzone-icon-box">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+          <line x1="7" y1="8" x2="17" y2="8"></line>
+          <line x1="7" y1="12" x2="12" y2="12"></line>
+          <line x1="7" y1="16" x2="10" y2="16"></line>
+        </svg>
+      </div>
+      <div class="dropzone-text">Click to choose or drag & drop PAN card images or PDFs here</div>
+      <div class="dropzone-hint">Supports JPEG, PNG, WEBP, and PDF documents, Multiple files supported</div>
+      <input type="file" id="cards" name="cards" accept="image/*,.pdf" multiple style="display: none;">
+    </div>
+    <div id="file-list-preview" class="file-list-badge-container"></div>
+
+    <div style="margin-top: 26px;">
+      <button class="btn btn-primary btn-large btn-block" type="submit" id="pan-submit-btn">
+        <span>Extract PAN Details</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+{% if results %}
+<div class="card" id="results-card">
+  <div class="card-header-clean">
+    <h2 class="card-title">2. Extraction Results ({{ results|length }} file{{ 's' if results|length != 1 else '' }})</h2>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button class="btn btn-secondary" onclick="exportPanResultsToCsv()" type="button">Download CSV</button>
+      <button class="btn btn-secondary" onclick="copyAllPanResultsJson()" type="button">Copy All JSON</button>
+    </div>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; gap: 20px;">
+    {% for r in results %}
+    <div class="pan-result-item" data-filename="{{ r.filename }}" data-pan="{{ r.fields.pan.value if r.fields else '' }}" data-name="{{ r.fields.name.value if r.fields else '' }}" data-dob="{{ r.fields.dob.value if r.fields else '' }}" data-status="{{ 'Error' if r.error else ('Review' if r.needs_review else 'Validated') }}" style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 20px; background: var(--bg-card-inner);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text-main);">{{ r.filename }}</h3>
+        {% if r.error %}
+          <span class="status-badge status-error">Error</span>
+        {% elif r.needs_review %}
+          <span class="status-badge status-warning">Review Needed</span>
+        {% else %}
+          <span class="status-badge status-ok">Validated</span>
+        {% endif %}
+      </div>
+
+      {% if r.error %}
+        <div class="alert alert-danger">{{ r.error }}</div>
+      {% else %}
+        <div class="field-grid" style="margin-bottom: 14px;">
+          <div class="field-item">
+            <div class="field-label">PAN Number</div>
+            <div class="field-value" style="font-family: 'Consolas', monospace; font-size: 1.1rem; color: var(--primary);">
+              <span>{{ r.fields.pan.value or 'Not detected' }}</span>
+              {% if r.fields.pan.value %}
+                <button class="copy-btn" onclick="copyToClipboard('{{ r.fields.pan.value }}', this)" title="Copy PAN">Copy</button>
+              {% endif %}
+            </div>
+            {% if r.fields.pan.confidence is not none %}
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px;">Confidence: {{ "%.0f"|format(r.fields.pan.confidence * 100) }}%</div>
+            {% endif %}
+          </div>
+
+          <div class="field-item">
+            <div class="field-label">Cardholder Name</div>
+            <div class="field-value" style="font-weight: 600;">
+              <span>{{ r.fields.name.value or 'Not detected' }}</span>
+              {% if r.fields.name.value %}
+                <button class="copy-btn" onclick="copyToClipboard('{{ r.fields.name.value }}', this)" title="Copy Name">Copy</button>
+              {% endif %}
+            </div>
+            {% if r.fields.name.confidence is not none %}
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px;">Confidence: {{ "%.0f"|format(r.fields.name.confidence * 100) }}%</div>
+            {% endif %}
+          </div>
+
+          <div class="field-item">
+            <div class="field-label">Date of Birth</div>
+            <div class="field-value">
+              <span>{{ r.fields.dob.value or 'Not detected' }}</span>
+              {% if r.fields.dob.value %}
+                <button class="copy-btn" onclick="copyToClipboard('{{ r.fields.dob.value }}', this)" title="Copy DOB">Copy</button>
+              {% endif %}
+            </div>
+            {% if r.fields.dob.confidence is not none %}
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px;">Confidence: {{ "%.0f"|format(r.fields.dob.confidence * 100) }}%</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <details class="expander">
+          <summary>View JSON Payload</summary>
+          <div class="log-box" style="margin-top: 8px;"><pre style="margin: 0; font-family: monospace;">{{ r.mapped_json }}</pre></div>
+        </details>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  <script id="pan-results-data" type="application/json">
+    {{ results|tojson }}
+  </script>
+  <script>
+    function exportPanResultsToCsv() {
+      const el = document.getElementById('pan-results-data');
+      if (!el) return;
+      try {
+        const results = JSON.parse(el.textContent);
+        const headers = ['Filename', 'PAN Number', 'Cardholder Name', 'Date of Birth', 'Status', 'Confidence'];
+        const rows = results.map(r => {
+          if (r.error) return [`"${r.filename}"`, '""', '""', '""', '"Error"', '""'];
+          const pan = (r.fields && r.fields.pan && r.fields.pan.value) || '';
+          const name = (r.fields && r.fields.name && r.fields.name.value) || '';
+          const dob = (r.fields && r.fields.dob && r.fields.dob.value) || '';
+          const status = r.needs_review ? 'Needs Review' : 'Validated';
+          const conf = (r.fields && r.fields.pan && r.fields.pan.confidence !== null) ? Math.round(r.fields.pan.confidence * 100) + '%' : '';
+          return [`"${r.filename}"`, `"${pan}"`, `"${name}"`, `"${dob}"`, `"${status}"`, `"${conf}"`];
+        });
+        const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'PAN_Extraction_Results.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        if (window.showToast) showToast('Exported PAN results to CSV!', 'success');
+      } catch (err) {
+        console.error('CSV export error:', err);
+      }
+    }
+
+    function copyAllPanResultsJson() {
+      const el = document.getElementById('pan-results-data');
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+        if (window.showToast) showToast('All PAN JSON results copied to clipboard!', 'success');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const resCard = document.getElementById('results-card');
+      if (resCard) resCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('pan-form');
+    const btn  = document.getElementById('pan-submit-btn');
+    if (form && btn) {
+      form.addEventListener('submit', () => {
+        btn.disabled = true;
+        btn.innerHTML = '<span>Extracting...</span>';
+      });
+    }
+    // Universal hotkey Ctrl+Enter to submit
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        if (form && !btn.disabled) form.submit();
+      }
+    });
+  });
+</script>
+<script src="{{ url_for('static', filename='js/pan.js') }}"></script>
+{% endblock %}
