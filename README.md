@@ -32,4 +32,4 @@ Copy `.env.example` to `.env` to set the host, port and LLM endpoint for the Pol
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+All rights reserved, see [LICENSE](LICENSE).
