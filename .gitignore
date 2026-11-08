@@ -1,5 +1,6 @@
 # Allowlist: only the files needed to run the app are tracked.
-# Everything else (data, logs, uploads, docs, tests, secrets) stays local.
+# Everything else (data, logs, uploads, docs, secrets) stays local.
+# tests/ is tracked: synthetic data only, never customer documents.
 /*
 !/.gitignore
 !/.env.example
@@ -21,6 +22,7 @@
 !/routes/
 !/static/
 !/templates/
+!/tests/
 
 # Never track inside the allowed folders either
 __pycache__/
