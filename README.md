@@ -26,6 +26,15 @@ Control_Panel.bat    # optional PySide6 control panel
 
 Copy `.env.example` to `.env` to set the host, port and LLM endpoint for the Policy Reader. Production runs under waitress (or IIS).
 
+## Test
+
+Tests in `tests/` use synthetic data only (never customer documents) and make no network calls.
+
+```
+pip install pytest
+python -m pytest tests
+```
+
 ## Layout
 
 `app.py` (Flask app factory), `routes/` (one blueprint per tool), `core/` (OCR, policy and Excel engines), `templates/` + `static/` (UI), `server_gui.py` (control panel).

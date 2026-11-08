@@ -3613,6 +3613,22 @@ def _is_blankish(value: object) -> bool:
     return text in {"", "null", "none", "n/a", "na", "not available", "not found"}
 
 
+# Landmark and street-level words that never form an Indian city name. "Tanki"
+# (water tank) is a common landmark in Indian addresses. NAGAR/PURI are left out
+# on purpose: they are part of real city names (Gandhinagar, Puri).
+_ADDRESS_FRAGMENT_WORDS = re.compile(
+    r"\b(?:NEAR|OPP|OPPOSITE|BEHIND|TANKI|H\.?\s*NO|HOUSE|FLAT|PLOT|FLOOR|BLOCK|"
+    r"SECTOR|PHASE|GALI|LANE|STREET|ROAD|MARG|CHOWK|COLONY|VIHAR|ENCLAVE|EXTN|MOHALLA)\b",
+    flags=re.IGNORECASE,
+)
+
+
+def _looks_like_noisy_city(value: object) -> bool:
+    """True when an extracted city is a landmark or address fragment, not a city."""
+    city = str(value or "")
+    return bool(re.search(r"[\d,/#]", city) or _ADDRESS_FRAGMENT_WORDS.search(city))
+
+
 _TP_ONLY_KEYWORDS = re.compile(
     r"liability\s+only|third[\s-]*party\s+only|tp\s+only|"
     r"liability\s+policy|tp\s+policy|"
@@ -3741,7 +3757,7 @@ def _backfill_missing_fields_from_text(
         # Clean city & state if noisy
         if fallback.get('city') and (
             _is_blankish(enriched.get('city'))
-            or any(w in str(enriched.get('city', '')).upper() for w in ('TANKI', 'NEAR'))
+            or _looks_like_noisy_city(enriched.get('city'))
         ):
             enriched['city'] = fallback['city']
         if fallback.get('state') and (
