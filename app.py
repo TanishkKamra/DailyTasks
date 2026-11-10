@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-889a00󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀸󠀸󠀹󠁡󠀰󠀰󠁿
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-889a00󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀸󠀸󠀹󠁡󠀰󠀰󠁽
 """
 app.py, Unified OCR Hub Flask Server.
 Hosts PAN OCR, Aadhaar OCR, Policy Reader, LP_Delete, LP_DateWiseData,

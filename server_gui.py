@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-5ef9f1󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀵󠁥󠁦󠀹󠁦󠀱󠁿
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-5ef9f1󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀵󠁥󠁦󠀹󠁦󠀱󠁽
 """
 server_gui.py: Modern Desktop Control Panel for Daily Tasks
 Provides process management, real-time logging terminal, LAN IP broadcasting,

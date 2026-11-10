@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-d9dcab󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁤󠀹󠁤󠁣󠁡󠁢󠁿
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-d9dcab󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁤󠀹󠁤󠁣󠁡󠁢󠁽
 """
 aocr_core.py, Aadhaar card field extractor with name recognition.
 

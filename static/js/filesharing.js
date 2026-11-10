@@ -1,4 +1,4 @@
-// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-aae0e4󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁡󠁡󠁥󠀰󠁥󠀴󠁿
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-aae0e4󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁡󠁡󠁥󠀰󠁥󠀴󠁽
 /**
  * static/js/filesharing.js: Frontend logic for the File Share module.
  * Supports virtual folders, uploaded files, and live read-only Hosted Folders.

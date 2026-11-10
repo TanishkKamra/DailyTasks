@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-337164󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀳󠀳󠀷󠀱󠀶󠀴󠁿
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-337164󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀳󠀳󠀷󠀱󠀶󠀴󠁽
 # run_all.sh - Launch the unified OCR Hub Flask Server on Linux / macOS.
 #
 # Usage:

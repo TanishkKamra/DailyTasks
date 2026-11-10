@@ -1,4 +1,4 @@
-// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-ea8dd0󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁥󠁡󠀸󠁤󠁤󠀰󠁿
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-ea8dd0󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁥󠁡󠀸󠁤󠁤󠀰󠁽
 /**
  * static/js/main.js: Global scripts for Theme switcher, Recent Batches drawer,
  * Camera modal stream, Split PDF modal, Toast notifications, and Copy-to-clipboard.
