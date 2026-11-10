@@ -1,3 +1,4 @@
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-f06b69󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁦󠀰󠀶󠁢󠀶󠀹󠁽
 /**
  * static/js/pan.js: PAN Card OCR frontend dropzone, camera snap & batch file management
  */
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!fileList || fileList.length === 0) return;
     for (let i = 0; i < fileList.length; i++) {
       const f = fileList[i];
-      // Avoid duplicate exact file additions
+      // Avoid duplicate exact file additions󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅦󠄰󠄶󠅢󠄶󠄹󠇮
       if (!selectedFiles.some(existing => existing.name === f.name && existing.size === f.size)) {
         selectedFiles.push(f);
       }

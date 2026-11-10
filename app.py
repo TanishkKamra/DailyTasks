@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-889a00󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀸󠀸󠀹󠁡󠀰󠀰󠁽
 """
 app.py, Unified OCR Hub Flask Server.
 Hosts PAN OCR, Aadhaar OCR, Policy Reader, LP_Delete, LP_DateWiseData,
@@ -12,7 +13,7 @@ import time
 import uuid
 from pathlib import Path
 
-# Ensure UTF-8 output on Windows consoles to prevent charmap UnicodeEncodeErrors
+# Ensure UTF-8 output on Windows consoles to prevent charmap UnicodeEncodeErrors󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄸󠄹󠅡󠄰󠄰󠇮
 if hasattr(sys.stdout, "reconfigure"):
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -154,7 +155,7 @@ def create_app() -> Flask:
         # Silently swallow TLS-probe connections (client accidentally sent
         # https:// to our plain-HTTP port).  Werkzeug logs these as:
         #   code 400, message Bad request version ('\x13\x01...')
-        # We return a plain 400 so the socket closes cleanly rather than
+        # We return a plain 400 so the socket closes cleanly rather than󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄸󠄹󠅡󠄰󠄰󠇮
         # letting the error propagate into a misleading 500.
         msg = str(e)
         if _wants_json_error(request.path):
@@ -248,7 +249,7 @@ def main():
         # causes a generic 500 before the request ever reaches Flask/our own
         # error handlers. Waitress is a production-grade WSGI server that
         # handles this correctly and is far more stable under concurrent API
-        # load.
+        # load.󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄸󠄹󠅡󠄰󠄰󠇮
         try:
             from waitress import serve
         except ImportError:

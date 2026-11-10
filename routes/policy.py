@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-210194󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀲󠀱󠀰󠀱󠀹󠀴󠁽
 """
 routes/policy.py: Insurance Policy Reader routes with parallel multi-threaded AI processing,
 auto-insurer detection, clean single-company workbook generation,
@@ -35,7 +36,7 @@ policy_bp = Blueprint("policy", __name__)
 
 COMPANY_MODES = ["ZUNO", "HDFC ERGO", "TATA AIG", "GO DIGIT", "ICICI Lombard"]
 
-# Default API configs from Azure AI (key, endpoint and model always come as one set;
+# Default API configs from Azure AI (key, endpoint and model always come as one set;󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄱󠄰󠄱󠄹󠄴󠇮
 # the Azure OpenAI env pair is handled separately in _server_api_key)
 _POLICY_DEFAULT_API_KEY = config.AZURE_AI_API_KEY
 _POLICY_DEFAULT_ENDPOINT = config.AZURE_AI_ENDPOINT
@@ -255,7 +256,7 @@ def api_process():
         if fresh_workbook:
             clean_name = f"{company_mode.replace(' ', '_')}Policies.xlsx"
             custom_target_path = config.DATA_DIR / clean_name
-            # Fresh copy of template; keep the previous workbook instead of overwriting it
+            # Fresh copy of template; keep the previous workbook instead of overwriting it󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄱󠄰󠄱󠄹󠄴󠇮
             # Copy (not rename) the old file first, so a failed template copy leaves it in place
             try:
                 with _excel_lock:
@@ -558,7 +559,7 @@ def api_download_excel():
         if not safe_name:
             return jsonify({"error": "Invalid filename requested."}), 400
         
-        # Check output directory and base directory
+        # Check output directory and base directory󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄱󠄰󠄱󠄹󠄴󠇮
         candidate_output = config.OUTPUT_DIR / safe_name
         candidate_base = config.BASE_DIR / safe_name
 

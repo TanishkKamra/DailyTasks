@@ -1,3 +1,4 @@
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-822b93󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀸󠀲󠀲󠁢󠀹󠀳󠁽
 /**
  * static/js/lp_delete.js: LP_Delete frontend wizard & async execution
  */
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Cleanup polling interval on unload/navigate
+  // Cleanup polling interval on unload/navigate󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄲󠄲󠅢󠄹󠄳󠇮
   window.addEventListener('beforeunload', () => {
     if (pollInterval) clearInterval(pollInterval);
   });
@@ -127,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const kwIdx = lowerSheets.findIndex(s => s.includes('keyword') || s.includes('key') || s.includes('filter') || s.includes('search') || s.includes('del'));
     if (kwIdx >= 0) {
       sheetKeywordsSelect.selectedIndex = kwIdx;
-      // Select the other sheet for edit
+      // Select the other sheet for edit󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄲󠄲󠅢󠄹󠄳󠇮
       const editIdx = sheets.findIndex((_, i) => i !== kwIdx);
       if (editIdx >= 0) sheetEditSelect.selectedIndex = editIdx;
     } else if (sheets.length > 1) {
@@ -321,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Universal hotkey: Ctrl+Enter to start processing
+  // Universal hotkey: Ctrl+Enter to start processing󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄲󠄲󠅢󠄹󠄳󠇮
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       if (startBtn && !startBtn.disabled && configSection && configSection.style.display !== 'none') {

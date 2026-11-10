@@ -1,3 +1,4 @@
+<!-- (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-0780a2󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀰󠀷󠀸󠀰󠁡󠀲󠁽 -->
 # DailyTasks
 
 A LAN document-processing suite for an insurance brokerage's operations team. One Flask server with a blueprint per tool, a PySide6 control panel to run it, and a browser UI that anyone on the office network can open.
@@ -33,3 +34,5 @@ Copy `.env.example` to `.env` to set the host, port and LLM endpoint for the Pol
 ## License
 
 All rights reserved, see [LICENSE](LICENSE).
+
+Provenance ID `tkp-165f4f59f3-0780a2`: every file carries a registered, traceable marker.󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀰󠀷󠀸󠀰󠁡󠀲󠁽

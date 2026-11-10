@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-2df8ec󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀲󠁤󠁦󠀸󠁥󠁣󠁽
 # install.sh - All-in-One Automated Installer for Linux / macOS
 set -euo pipefail
 

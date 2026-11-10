@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-b7c5a5󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁢󠀷󠁣󠀵󠁡󠀵󠁽
 """
 routes/filesharing.py, File Sharing module for Daily Tasks.
 Provides a simple LAN file-sharing system with folder hierarchy,
@@ -24,7 +25,7 @@ import config
 
 filesharing_bp = Blueprint("filesharing", __name__)
 
-# ── Storage ──────────────────────────────────────────────────────────────
+# ── Storage ──────────────────────────────────────────────────────────────󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅢󠄷󠅣󠄵󠅡󠄵󠇮
 FILESHARE_DIR = config.BASE_DIR / "fileshare_uploads"
 FILESHARE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -305,7 +306,7 @@ def upload_file():
     original_name = uploaded.filename
     safe_name = secure_filename(original_name) or f"upload_{uuid.uuid4().hex[:8]}"
 
-    # Ensure unique disk filename
+    # Ensure unique disk filename󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅢󠄷󠅣󠄵󠅡󠄵󠇮
     disk_filename = f"{uuid.uuid4().hex[:12]}_{safe_name}"
     disk_path = FILESHARE_DIR / disk_filename
     uploaded.save(str(disk_path))
@@ -449,7 +450,7 @@ def delete_item(item_id: str):
     return jsonify({"deleted": item_id, "ok": True})
 
 
-# ── Hosted Folder Endpoints ───────────────────────────────────────────────
+# ── Hosted Folder Endpoints ───────────────────────────────────────────────󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅢󠄷󠅣󠄵󠅡󠄵󠇮
 
 @filesharing_bp.route("/filesharing/host-folder", methods=["POST"])
 def host_folder():

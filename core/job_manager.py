@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-e681d7󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁥󠀶󠀸󠀱󠁤󠀷󠁽
 """
 core/job_manager.py, Thread-safe asynchronous job and task state manager.
 """
@@ -104,9 +105,9 @@ class JobManager:
                     job.status = "completed"
                     job.progress = 1.0
             except Exception as exc:
-                # str(exc) alone loses *where* the failure happened, which
-                # made failed jobs hard to diagnose from /api/status/<id>.
-                # Log the full traceback into the job's own log stream too.
+                # str(exc) alone loses *where* the failure happened, which󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅥󠄶󠄸󠄱󠅤󠄷󠇮
+                # made failed jobs hard to diagnose from /api/status/<id>.󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅥󠄶󠄸󠄱󠅤󠄷󠇮
+                # Log the full traceback into the job's own log stream too.󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅥󠄶󠄸󠄱󠅤󠄷󠇮
                 tb = traceback.format_exc()
                 job.status = "failed"
                 job.error = str(exc)

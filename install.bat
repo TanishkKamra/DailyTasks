@@ -1,4 +1,5 @@
 @echo off
+@REM (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-e0851b
 setlocal enabledelayedexpansion
 title Daily Tasks - All-in-One Installer
 

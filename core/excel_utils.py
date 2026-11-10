@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-cbe191󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁣󠁢󠁥󠀱󠀹󠀱󠁽
 """
 core/excel_utils.py, Comprehensive Excel styling and workbook management for Policy Reader.
 Matches DailyTasks formatting, auto-fit column widths, openpyxl template mapping,
@@ -173,7 +174,7 @@ def _strip_country_code(value: Any) -> str:
     if not text:
         return ""
 
-    # Check if phone number is masked (contains X, x, *, •)
+    # Check if phone number is masked (contains X, x, *, •)󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅣󠅢󠅥󠄱󠄹󠄱󠇮
     if re.search(r"[xX*•]", text):
         # Extract digits, masking chars, and leading '+'
         cleaned = re.sub(r"[^\d+xX*•]", "", text)
@@ -200,7 +201,7 @@ def _strip_country_code(value: Any) -> str:
             return cleaned[-10:]
         return cleaned
 
-    # Not masked - process as normal number
+    # Not masked - process as normal number󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅣󠅢󠅥󠄱󠄹󠄱󠇮
     cleaned = re.sub(r"[^\d+]", "", text)
     if cleaned.startswith("+91"):
         cleaned = cleaned[3:]
@@ -662,7 +663,7 @@ def _append_row_to_excel(output_excel: str | os.PathLike, sheet_name: str, row_d
                 except (ValueError, TypeError):
                     cell.value = 0
             else:
-                # Sanitize text against Excel formula injection
+                # Sanitize text against Excel formula injection󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅣󠅢󠅥󠄱󠄹󠄱󠇮
                 if isinstance(value, str) and value.startswith(("=", "+", "-", "@", "\t", "\r")):
                     cell.value = f"'{value}"
                 else:

@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-a2c35c󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁡󠀲󠁣󠀳󠀵󠁣󠁽
 """
 routes/lp_delete.py, LP_Delete web UI and asynchronous workbook processing endpoints.
 """

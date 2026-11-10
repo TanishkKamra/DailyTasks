@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-658153󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀶󠀵󠀸󠀱󠀵󠀳󠁽
 """
 routes/dashboard.py, Dashboard & Landing routes with live multi-service request logging feed
 and recent job history API.

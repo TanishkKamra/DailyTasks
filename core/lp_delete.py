@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-207236󠁻󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀲󠀰󠀷󠀲󠀳󠀶󠁽
 """
 core/lp_delete.py: LP_Delete core engine with XML zip surgery, openpyxl fallback, and verification.
 """
@@ -246,7 +247,7 @@ def process_lp_delete(
         output_bytes = write_via_openpyxl()
         log(f"Saved via fallback in {time.time() - write_start:.1f}s.")
 
-    # Verification
+    # Verification󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄰󠄷󠄲󠄳󠄶󠇮
     log("Verifying written output matches computed results...")
     progress(0.92, "Verifying output...")
     verify_values = pd.read_excel(
@@ -275,7 +276,7 @@ def process_lp_delete(
     log(f"Verification passed ({len(verify_values):,} rows checked).")
     progress(1.0, "Completed!")
 
-    # Generate preview dataframe (first 50 rows)
+    # Generate preview dataframe (first 50 rows)󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄰󠄷󠄲󠄳󠄶󠇮
     preview_df = pd.read_excel(io.BytesIO(file_bytes), sheet_name=sheet_edit, nrows=50)
     preview_df[new_col_name] = match_list[:50]
     preview_records = preview_df.fillna("").to_dict(orient="records")
