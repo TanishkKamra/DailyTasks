@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-d9dcab󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁤󠀹󠁤󠁣󠁡󠁢󠁿
 """
 aocr_core.py, Aadhaar card field extractor with name recognition.
 
@@ -44,7 +45,7 @@ except ImportError:
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
 PDF_EXTENSIONS   = {".pdf"}
 
-# ===========================================================================
+# ===========================================================================󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅤󠄹󠅤󠅣󠅡󠅢󠇮
 # 1. PDF → image conversion  (PyMuPDF: no external binaries required)
 # ===========================================================================
 
@@ -333,7 +334,7 @@ def _name_from_text(text: str) -> Optional[str]:
                 return _format_name(remainder)
             if i + 1 < len(lines) and _is_text_line_name_like(lines[i + 1]):
                 return _format_name(lines[i + 1])
-    # Fallback: take the first plausible name-like line that appears before the aadhaar number
+    # Fallback: take the first plausible name-like line that appears before the aadhaar number󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅤󠄹󠅤󠅣󠅡󠅢󠇮
     aadhaar_pos = None
     for i, line in enumerate(lines):
         if AADHAAR_REGEX.search(_normalize_digits(line)):
@@ -655,7 +656,7 @@ def process_card_bytes(raw_bytes: bytes, label: str = "upload") -> Dict:
 
 # ===========================================================================
 # 8. CLI
-# ===========================================================================
+# ===========================================================================󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅤󠄹󠅤󠅣󠅡󠅢󠇮
 
 def collect_images(inputs: List[str]) -> List[Path]:
     all_exts = IMAGE_EXTENSIONS | PDF_EXTENSIONS

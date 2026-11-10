@@ -1,3 +1,4 @@
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-aae0e4󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁡󠁡󠁥󠀰󠁥󠀴󠁿
 /**
  * static/js/filesharing.js: Frontend logic for the File Share module.
  * Supports virtual folders, uploaded files, and live read-only Hosted Folders.
@@ -9,7 +10,7 @@ let currentHostedSubpath = ""; // Relative subpath inside hosted folder
 let manifest = { folders: [], files: [], hosted_folders: [] };
 let lastFocusedElement = null;
 
-// Inline SVG Icons Map (Single-color currentColor vector set)
+// Inline SVG Icons Map (Single-color currentColor vector set)󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅡󠅡󠅥󠄰󠅥󠄴󠇮
 const SVG_ICONS = {
   folder: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>',
   hosted: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>',
@@ -260,7 +261,7 @@ function renderView() {
       grid.appendChild(card);
     });
 
-    // Render uploaded files
+    // Render uploaded files󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅡󠅡󠅥󠄰󠅥󠄴󠇮
     files.forEach(file => {
       const sizeStr = formatSize(file.size);
       const card = document.createElement("div");
@@ -624,7 +625,7 @@ function setupKeyboardNavigation() {
   });
 }
 
-// ── Utility ──────────────────────────────────────────────────────────
+// ── Utility ──────────────────────────────────────────────────────────󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅡󠅡󠅥󠄰󠅥󠄴󠇮
 
 function escapeHtml(str) {
   return String(str || "")

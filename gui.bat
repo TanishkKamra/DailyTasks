@@ -1,4 +1,5 @@
 @echo off
+@REM (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-781277
 setlocal
 title Daily Tasks - Control Panel
 

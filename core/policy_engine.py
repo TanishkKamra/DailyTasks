@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-6483b1󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀶󠀴󠀸󠀳󠁢󠀱󠁿
 """
 core/policy_engine.py: High-performance Insurance GI Policy Extraction Engine.
 Complete extraction rules, insurer-specific heuristics (Zuno, HDFC ERGO, TATA AIG, Go Digit,
@@ -27,7 +28,7 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
-# SSL verification (defaults to False to match DailyTasksV2 and corporate inspection proxies)
+# SSL verification (defaults to False to match DailyTasksV2 and corporate inspection proxies)󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄶󠄴󠄸󠄳󠅢󠄱󠇮
 SSL_VERIFY: bool = os.getenv("SSL_VERIFY", "false").lower() in ("true", "1", "yes")
 if not SSL_VERIFY:
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -3060,7 +3061,7 @@ def _extract_icici_fields(policy_text: str) -> dict:
         if not re.match(r"^(?:Period|Vehicle|Policy|Address|Date|Mobile|Ref)\b", candidate_name, re.IGNORECASE):
             customer_name = _strip_trailing_id_suffix(candidate_name)
 
-    # ── Address, City, State, Pin ──────────────────────────────────────────
+    # ── Address, City, State, Pin ──────────────────────────────────────────󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄶󠄴󠄸󠄳󠅢󠄱󠇮
     address = ""
     city = ""
     state = ""
@@ -5112,5 +5113,5 @@ def append_result_to_excel(filename: str, data: dict, output_excel: str | os.Pat
 
 
 
-# Backward compatibility alias
+# Backward compatibility alias󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄶󠄴󠄸󠄳󠅢󠄱󠇮
 CANONICAL_POLICY_FIELDS = POLICY_FIELDS

@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-be6b62󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁢󠁥󠀶󠁢󠀶󠀲󠁿
 """
 core/lp_datewise.py, LP_DateWiseData stratified random sampling engine across 15-minute windows.
 """
@@ -101,7 +102,7 @@ def process_lp_datewise(
     groups = df_valid.groupby(["_date", "_hour", "_quarter"]).indices
     log(f"Found {len(groups):,} active quarter-hour window buckets.")
 
-    # Target calculation
+    # Target calculation󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅢󠅥󠄶󠅢󠄶󠄲󠇮
     per_day_target = target_total / n_days
     quarter_targets: Dict[Tuple[Any, int, int], float] = {}
     hours_by_day: Dict[Any, set] = {}
@@ -187,7 +188,7 @@ def process_lp_datewise(
     df_out[result_column_name] = 0
     df_out.loc[list(selected_index_set), result_column_name] = 1
 
-    # Daily summary table
+    # Daily summary table󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅢󠅥󠄶󠅢󠄶󠄲󠇮
     summary_df = (
         df_valid.assign(_selected=df_valid.index.isin(selected_index_set))
         .groupby("_date")["_selected"]
@@ -206,7 +207,7 @@ def process_lp_datewise(
         # ponytail: workbook parsed twice (pandas + openpyxl); optimise for large multi-sheet files
         wb = openpyxl.load_workbook(io.BytesIO(file_bytes))
         ws = wb[sheet_name] if sheet_name is not None else wb.worksheets[0]
-        # Old merges/filters/tables would point at stale ranges after the rewrite
+        # Old merges/filters/tables would point at stale ranges after the rewrite󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅢󠅥󠄶󠅢󠄶󠄲󠇮
         for rng in list(ws.merged_cells.ranges):
             ws.unmerge_cells(str(rng))
         ws.auto_filter.ref = None

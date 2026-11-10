@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-a99f9b󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁡󠀹󠀹󠁦󠀹󠁢󠁿
 """
 ocr_core.py, PAN card field extractor.
 
@@ -58,7 +59,7 @@ def pdf_to_images(pdf_bytes: bytes) -> List[bytes]:
         pass
     return images
 
-# ===========================================================================
+# ===========================================================================󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅡󠄹󠄹󠅦󠄹󠅢󠇮
 # 1. Loading + orientation
 # ===========================================================================
 
@@ -426,7 +427,7 @@ def extract_fields(tokens: List[Token], img_h: float, img_w: float) -> Tuple[Dic
     #   [Date of Birth]  [DOB value]
     #   [PAN number]
     #
-    # We try 4 strategies in order of reliability.
+    # We try 4 strategies in order of reliability.󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅡󠄹󠄹󠅦󠄹󠅢󠇮
 
     # ── shared helpers ────────────────────────────────────────────────────────
     def same_row(a: Token, b: Token) -> bool:
@@ -792,7 +793,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-# Aliases for mail route compatibility
+# Aliases for mail route compatibility󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅡󠄹󠄹󠅦󠄹󠅢󠇮
 process_pan_bytes = process_card_bytes
 process_pan_path = process_card
 

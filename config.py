@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-f9f9be󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁦󠀹󠁦󠀹󠁢󠁥󠁿
 """
 config.py, Central configuration for OCR Hub
 """
@@ -78,7 +79,7 @@ LOG_DIR = BASE_DIR / "log"
 PAN_LOG_DIR = LOG_DIR / "PANLOGS"
 AADHAAR_LOG_DIR = LOG_DIR / "AADHARLOGS"
 
-# Ensure directories exist
+# Ensure directories exist󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅦󠄹󠅦󠄹󠅢󠅥󠇮
 for directory in (UPLOAD_DIR, OUTPUT_DIR, LOG_DIR, PAN_LOG_DIR, AADHAAR_LOG_DIR):
     directory.mkdir(parents=True, exist_ok=True)
 
@@ -90,7 +91,7 @@ BASE_URL = f"http://{LAN_IP}:{PORT}"
 # Upload limits (50 MB)
 MAX_CONTENT_LENGTH = 50 * 1024 * 1024
 
-# Demo columns workbook for Policy Reader
+# Demo columns workbook for Policy Reader󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅦󠄹󠅦󠄹󠅢󠅥󠇮
 DEMO_COLUMNS_WORKBOOK = BASE_DIR / "DemoColumns.xlsx"
 DEFAULT_POLICY_OUTPUT = BASE_DIR / "policy_reading_outputs.xlsx"
 
@@ -107,5 +108,7 @@ AZURE_AI_MODEL = os.getenv("AZURE_AI_MODEL", "gpt-5-mini")
 AZURE_AI_API_VERSION = os.getenv("AZURE_AI_API_VERSION", "2025-04-01-preview")
 
 
-# Your own brokerage's email domains (comma-separated), so the Policy Reader never mistakes them for the customer's
+# Your own brokerage's email domains (comma-separated), so the Policy Reader never mistakes them for the customer's󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅦󠄹󠅦󠄹󠅢󠅥󠇮
 BROKER_EMAIL_DOMAINS = {d.strip().lower() for d in os.getenv("BROKER_EMAIL_DOMAINS", "").split(",") if d.strip()}
+
+TELEMETRY_SITE_ID = "site_b3cffbf013"  # analytics site id, not a credential

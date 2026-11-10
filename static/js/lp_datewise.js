@@ -1,3 +1,4 @@
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-236eb4󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀲󠀳󠀶󠁥󠁢󠀴󠁿
 /**
  * static/js/lp_datewise.js: LP_DateWiseData frontend orchestration & async sampling execution
  */
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Cleanup polling interval on unload/navigate
+  // Cleanup polling interval on unload/navigate󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄳󠄶󠅥󠅢󠄴󠇮
   window.addEventListener('beforeunload', () => {
     if (pollInterval) clearInterval(pollInterval);
   });
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     columns.forEach(col => {
       datetimeColSelect.add(new Option(col, col));
     });
-    // Auto-select column containing date or time keywords
+    // Auto-select column containing date or time keywords󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄳󠄶󠅥󠅢󠄴󠇮
     const lowerCols = columns.map(c => c.toLowerCase());
     const dateKeywords = ['date', 'time', 'timestamp', 'datetime', 'created', 'call', 'txn', 'trans'];
     const bestIdx = lowerCols.findIndex(c => dateKeywords.some(kw => c.includes(kw)));
@@ -307,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Universal hotkey: Ctrl+Enter to start sampling
+  // Universal hotkey: Ctrl+Enter to start sampling󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄲󠄳󠄶󠅥󠅢󠄴󠇮
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       if (startBtn && !startBtn.disabled && mappingSection.style.display !== 'none') {

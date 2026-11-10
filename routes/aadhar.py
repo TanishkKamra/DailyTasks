@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-36bb0a󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀳󠀶󠁢󠁢󠀰󠁡󠁿
 import base64
 import csv
 import io
@@ -54,7 +55,7 @@ def _extract_input_items(req) -> Tuple[List[Tuple[str, bytes]], bool]:
     Returns (items, is_single_hint).
     """
     items = []
-    # 1. Multipart files
+    # 1. Multipart files󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄳󠄶󠅢󠅢󠄰󠅡󠇮
     files = (
         req.files.getlist("cards")
         or req.files.getlist("card")
@@ -111,7 +112,7 @@ def _extract_input_items(req) -> Tuple[List[Tuple[str, bytes]], bool]:
             if items:
                 return items, False
 
-    # 3. Raw Binary Body
+    # 3. Raw Binary Body󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄳󠄶󠅢󠅢󠄰󠅡󠇮
     raw_body = req.get_data()
     if raw_body and len(raw_body) > 10:
         fn = req.headers.get("X-Filename") or ("upload.pdf" if raw_body.startswith(b"%PDF") else "upload.jpg")
@@ -242,7 +243,7 @@ def api_ocr():
             print(f"[AADHAAR OCR API ERROR] '{filename}': {exc}", flush=True)
             results.append({"filename": filename, "error": str(exc)})
 
-    # Direct CSV Export for API callers
+    # Direct CSV Export for API callers󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄳󠄶󠅢󠅢󠄰󠅡󠇮
     if request.args.get("format", "").lower() == "csv":
         si = io.StringIO()
         cw = csv.writer(si)

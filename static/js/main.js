@@ -1,3 +1,4 @@
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-ea8dd0󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠁥󠁡󠀸󠁤󠁤󠀰󠁿
 /**
  * static/js/main.js: Global scripts for Theme switcher, Recent Batches drawer,
  * Camera modal stream, Split PDF modal, Toast notifications, and Copy-to-clipboard.
@@ -39,7 +40,7 @@ async function copyToClipboard(text, elem = null) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Theme Manager ────────────────────────────────────────────────────────
+  // ── Theme Manager ────────────────────────────────────────────────────────󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅥󠅡󠄸󠅤󠅤󠄰󠇮
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeText = document.getElementById('theme-toggle-text');
 
@@ -329,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ── Scroll-entry reveals (IntersectionObserver, no scroll listeners) ──────
+// ── Scroll-entry reveals (IntersectionObserver, no scroll listeners) ──────󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅥󠅡󠄸󠅤󠅤󠄰󠇮
 // Targets must match the html.reveal-on selectors in style.css.
 const REVEAL_TARGETS = '.main-content .page-header, .main-content .hub-card, .main-content .card:not(.card .card), .fileshare-header, .breadcrumb-bar';
 
@@ -359,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tops = targets.map((el) => (el.getClientRects().length ? el.getBoundingClientRect().top : Infinity));
   let i = 0;
   targets.forEach((el, k) => {
-    // Stagger only what is on screen at load; later items reveal as they scroll in.
+    // Stagger only what is on screen at load; later items reveal as they scroll in.󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠅥󠅡󠄸󠅤󠅤󠄰󠇮
     if (tops[k] < window.innerHeight) el.style.setProperty('--reveal-delay', `${Math.min(i++, 6) * 90}ms`);
     io.observe(el);
   });

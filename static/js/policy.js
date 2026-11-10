@@ -1,3 +1,4 @@
+// (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-7a26a7󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀷󠁡󠀲󠀶󠁡󠀷󠁿
 /**
  * static/js/policy.js: Insurance Policy Reader UI logic
  * Parallel extraction, auto-detect insurer mode, clean workbook option,
@@ -69,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Cleanup timers on unload/navigate
+  // Cleanup timers on unload/navigate󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄷󠅡󠄲󠄶󠅡󠄷󠇮
   window.addEventListener("beforeunload", () => {
     if (pollInterval) clearInterval(pollInterval);
   });
@@ -261,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Start analysis
+  // Start analysis󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄷󠅡󠄲󠄶󠅡󠄷󠇮
   startBtn.addEventListener("click", async () => {
     if (selectedFiles.length === 0) {
       showToast("Please upload at least one PDF file first.", "warning");
@@ -591,7 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return card;
   }
 
-  // JSON and CSV download buttons
+  // JSON and CSV download buttons󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄷󠅡󠄲󠄶󠅡󠄷󠇮
   if (downloadJsonBtn) {
     downloadJsonBtn.addEventListener("click", () => {
       if (!lastCompletedResult) return;

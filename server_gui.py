@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-5ef9f1󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀵󠁥󠁦󠀹󠁦󠀱󠁿
 """
 server_gui.py: Modern Desktop Control Panel for Daily Tasks
 Provides process management, real-time logging terminal, LAN IP broadcasting,
@@ -17,7 +18,7 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
-# Ensure current directory is on sys.path
+# Ensure current directory is on sys.path󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄵󠅥󠅦󠄹󠅦󠄱󠇮
 ROOT_DIR = Path(__file__).resolve().parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
@@ -334,7 +335,7 @@ class OCRHubGUI:
         )
         btn_free_port.pack(fill="x", pady=(6, 0))
 
-        # Card 2: Quick Links / Open Web Apps
+        # Card 2: Quick Links / Open Web Apps󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄵󠅥󠅦󠄹󠅦󠄱󠇮
         apps_card = tk.LabelFrame(
             left_col,
             text=" Quick Access (Open In Browser) ",
@@ -791,7 +792,7 @@ class OCRHubGUI:
                         self.root.after(0, lambda: self._update_status_ui(running=True))
                         self.is_running = True
                     elif not active and self.is_running:
-                        # Server exited or crashed
+                        # Server exited or crashed󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄵󠅥󠅦󠄹󠅦󠄱󠇮
                         self.root.after(0, lambda: self._update_status_ui(running=False))
                         self.is_running = False
                 except Exception:

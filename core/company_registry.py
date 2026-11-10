@@ -1,3 +1,4 @@
+# (c) 2026 Tanishk Kamra | All rights reserved | github.com/TanishkKamra/DailyTasks | tkp-165f4f59f3-8062a6󠀁󠁴󠁫󠁰󠀭󠀱󠀶󠀵󠁦󠀴󠁦󠀵󠀹󠁦󠀳󠀭󠀸󠀰󠀶󠀲󠁡󠀶󠁿
 """
 core/company_registry.py, Single source of truth mapping insurance-company
 IDs (stable, used by the client application / database) to the internal display
@@ -15,7 +16,7 @@ codebase should hardcode an ID.
 
 from typing import Optional, Tuple
 
-# id -> internal display name (this exact string is what policy_engine.py
+# id -> internal display name (this exact string is what policy_engine.py󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄰󠄶󠄲󠅡󠄶󠇮
 # and determine_policy_sheet_name() compare against everywhere)
 COMPANY_ID_MAP = {
     1: "ZUNO",
@@ -26,12 +27,12 @@ COMPANY_ID_MAP = {
 }
 
 # Reverse lookup, built once. Useful if some caller only has the name and
-# needs the ID back (e.g. for echoing both in a response).
+# needs the ID back (e.g. for echoing both in a response).󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄰󠄶󠄲󠅡󠄶󠇮
 COMPANY_NAME_TO_ID = {name: cid for cid, name in COMPANY_ID_MAP.items()}
 
 # Accepted spellings/aliases that should still resolve to a valid name,
 # kept only as a soft-deprecated fallback for callers not yet migrated to
-# sending the ID. New integrations should send the ID exclusively.
+# sending the ID. New integrations should send the ID exclusively.󠇯󠅴󠅫󠅰󠄭󠄱󠄶󠄵󠅦󠄴󠅦󠄵󠄹󠅦󠄳󠄭󠄸󠄰󠄶󠄲󠅡󠄶󠇮
 _NAME_ALIASES = {
     "ZUNO": "ZUNO",
     "EDELWEISS": "ZUNO",
